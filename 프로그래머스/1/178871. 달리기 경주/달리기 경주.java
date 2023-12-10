@@ -1,27 +1,27 @@
-import java.util.Map;
-import java.util.HashMap;
-
+import java.util.*;
 
 class Solution {
     public String[] solution(String[] players, String[] callings) {
+        Map<String, Integer> map = new HashMap<>();
         
-        Map<String, Integer> rankMap = new HashMap<>();
-        for(int i=0; i<players.length; i++) {
-            rankMap.put(players[i],i);
+        for(int i = 0; i<players.length; i++){
+            String player = players[i];
+            
+            map.put(player, i);
         }
-        
-        for(String player : callings){
-            int ownRank = rankMap.get(player);
+        for(String calling : callings){
+            int grade = map.get(calling);
             
-            String beforeplayer = players[ownRank-1];
+            String forwardCalling = players[grade-1];
             
-            players[ownRank] = beforeplayer;
-            players[ownRank-1] = player;
+            players[grade-1] = calling;
+            map.put(calling, grade-1);
             
-            rankMap.put(player,ownRank-1);
-            rankMap.put(beforeplayer, ownRank);
+            players[grade] = forwardCalling;
+            map.put(forwardCalling, grade);
         }
         return players;
+
+        
     }
-    
 }
