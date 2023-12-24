@@ -10,10 +10,13 @@ class Solution {
             }
         }
 
+        
+        
         if (min <= max) {
             return Arrays.copyOfRange(arr, min, max + 1);
         } else {
             return new int[]{-1};
         }
     }
+    
 }
