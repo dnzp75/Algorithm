@@ -23,6 +23,8 @@ class Solution {
 
             }
         }
+        
+        
         int[] answer = list.stream().mapToInt(x -> x).toArray();
         return answer;
     }
