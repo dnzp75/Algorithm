@@ -1,4 +1,7 @@
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.IOException;
+import java.util.StringTokenizer;
 
 public class Main {
     private static int[][] field;
@@ -7,19 +10,22 @@ public class Main {
     private static int[] dx = {-1, 1, 0, 0};
     private static int[] dy = {0, 0, -1, 1};
 
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        int T = scanner.nextInt();
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        
+        int T = Integer.parseInt(br.readLine());
         for(int test_case = 0; test_case < T; test_case++) {
-            M = scanner.nextInt();
-            N = scanner.nextInt();
-            K = scanner.nextInt();
+            StringTokenizer st = new StringTokenizer(br.readLine(), " ");
+            M = Integer.parseInt(st.nextToken());
+            N = Integer.parseInt(st.nextToken());
+            K = Integer.parseInt(st.nextToken());
             field = new int[M][N];
             visited = new boolean[M][N];
 
             for(int i = 0; i < K; i++) {
-                int x = scanner.nextInt();
-                int y = scanner.nextInt();
+                st = new StringTokenizer(br.readLine(), " ");
+                int x = Integer.parseInt(st.nextToken());
+                int y = Integer.parseInt(st.nextToken());
                 field[x][y] = 1;
             }
 
@@ -34,7 +40,7 @@ public class Main {
             }
             System.out.println(count);
         }
-        scanner.close();
+        br.close();
     }
 
     private static void dfs(int x, int y) {
