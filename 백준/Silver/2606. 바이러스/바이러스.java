@@ -10,18 +10,18 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int n = Integer.parseInt(br.readLine()); // 컴퓨터의 수
-        int m = Integer.parseInt(br.readLine()); // 연결된 컴퓨터 쌍의 수
+        int computer = Integer.parseInt(br.readLine()); // 컴퓨터의 수
+        int connection = Integer.parseInt(br.readLine()); // 연결된 컴퓨터 쌍의 수
 
-        network = new ArrayList[n + 1]; // 1번부터 시작하므로 n+1 크기로 초기화
-        visited = new boolean[n + 1]; // 방문 여부 배열 초기화
+        network = new ArrayList[computer + 1]; // 1번부터 시작하므로 n+1 크기로 초기화
+        visited = new boolean[computer + 1]; // 방문 여부 배열 초기화
 
-        for (int i = 1; i <= n; i++) {
+        for (int i = 1; i <= computer; i++) {
             network[i] = new ArrayList<>();
         }
 
         // 네트워크 연결 정보 입력
-        for (int i = 0; i < m; i++) {
+        for (int i = 0; i < connection; i++) {
             StringTokenizer st = new StringTokenizer(br.readLine(), " ");
             int a = Integer.parseInt(st.nextToken());
             int b = Integer.parseInt(st.nextToken());
@@ -46,8 +46,7 @@ public class Main {
         count++; // 감염된 컴퓨터 수 증가
 
         // 현재 컴퓨터와 연결된 모든 컴퓨터에 대해 DFS 탐색
-        for (int i = 0; i < network[start].size(); i++) {
-            int next = network[start].get(i);
+				for (int next : network[start]) {
             if (!visited[next]) {
                 dfs(next);
             }
