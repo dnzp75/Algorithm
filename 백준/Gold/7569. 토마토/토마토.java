@@ -1,4 +1,9 @@
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.IOException;
+import java.util.StringTokenizer;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class Main {
     static int[] dx = {1, -1, 0, 0, 0, 0};
@@ -18,17 +23,20 @@ public class Main {
         }
     }
 
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        M = sc.nextInt();
-        N = sc.nextInt();
-        H = sc.nextInt();
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+
+        M = Integer.parseInt(st.nextToken());
+        N = Integer.parseInt(st.nextToken());
+        H = Integer.parseInt(st.nextToken());
         box = new int[H][N][M];
 
         for (int h = 0; h < H; h++) {
             for (int n = 0; n < N; n++) {
+                st = new StringTokenizer(br.readLine());
                 for (int m = 0; m < M; m++) {
-                    box[h][n][m] = sc.nextInt();
+                    box[h][n][m] = Integer.parseInt(st.nextToken());
                     if (box[h][n][m] == 1) {
                         queue.add(new Tomato(h, n, m));
                     }
