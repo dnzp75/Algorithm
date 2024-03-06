@@ -1,3 +1,4 @@
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -5,13 +6,12 @@ import java.util.StringTokenizer;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        // BufferedReader와 StringTokenizer 사용하여 입력 처리
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int N = Integer.parseInt(br.readLine());
         int[] requests = new int[N];
         int maxRequest = 0;
 
-        StringTokenizer st = new StringTokenizer(br.readLine(), " ");
+        StringTokenizer st = new StringTokenizer(br.readLine());
         for (int i = 0; i < N; i++) {
             requests[i] = Integer.parseInt(st.nextToken());
             // 최대 예산 요청을 찾음
@@ -51,6 +51,5 @@ public class Main {
         }
 
         System.out.println(result);
-        br.close();
     }
 }
