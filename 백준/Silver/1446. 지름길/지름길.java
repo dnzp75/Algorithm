@@ -1,48 +1,66 @@
-import java.util.*;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.StringTokenizer;
 
 public class Main {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int N = sc.nextInt();
-        int D = sc.nextInt();
-        List<List<int[]>> graph = new ArrayList<>();
-        for (int i = 0; i <= D; i++) {
-            graph.add(new ArrayList<>());
-            if (i < D) graph.get(i).add(new int[]{i + 1, 1}); // 고속도로의 각 지점을 연결
+    static class spot{
+        int start;
+        int dist;
+        spot(int start, int dist){
+            this.start = start;
+            this.dist = dist;
+        }
+    }
+//    static ArrayList<spot>[] path; // 지름길 정보를 저장하기 위한 리스트
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+
+        // 0부터 시작해서 D에 도착해야함
+        int N = Integer.parseInt(st.nextToken()); // 지름길 갯수
+        int D = Integer.parseInt(st.nextToken()); // 고속도로 길이
+
+        int[] distance = new int[D+1]; // 거리
+        ArrayList<spot>[] path = new ArrayList[10001]; // d의 범위 -> 10000보다 작거나 같음
+
+        Arrays.fill(distance,Integer.MAX_VALUE); // 거리배열 최댓값으로 초기화
+        for(int i=0;i<10001;i++){
+            path[i] = new ArrayList<>();
         }
 
-        for (int i = 0; i < N; i++) {
-            int start = sc.nextInt();
-            int end = sc.nextInt();
-            int distance = sc.nextInt();
-            if (end <= D) graph.get(start).add(new int[]{end, distance}); // 지름길 추가
-        }
+        for(int i=0;i<N;i++){
+            st = new StringTokenizer(br.readLine());
+            int s = Integer.parseInt(st.nextToken()); // 시작위치
+            int e = Integer.parseInt(st.nextToken()); // 도착위치
+            int dist = Integer.parseInt(st.nextToken()); // 지름길 길이
 
-        int[] dist = new int[D + 1];
-        Arrays.fill(dist, Integer.MAX_VALUE);
-        dist[0] = 0; // 시작 지점
-
-        PriorityQueue<int[]> pq = new PriorityQueue<>(Comparator.comparingInt(a -> a[1]));
-        pq.add(new int[]{0, 0}); // 시작점
-
-        while (!pq.isEmpty()) {
-            int[] current = pq.poll();
-            int currentNode = current[0];
-            int currentDistance = current[1];
-
-            if (dist[currentNode] < currentDistance) continue;
-
-            for (int[] next : graph.get(currentNode)) {
-                int nextNode = next[0];
-                int nextDistance = currentDistance + next[1];
-
-                if (nextDistance < dist[nextNode]) {
-                    dist[nextNode] = nextDistance;
-                    pq.add(new int[]{nextNode, nextDistance});
-                }
+            // 지름길이 무조건으로 최단거리는 아님. -> 지름길인 경우만 저장한다.
+            if(e-s>dist){
+                path[e].add(new spot(s,dist));
             }
         }
 
-        System.out.println(dist[D]);
+        // 최단거리 구하기
+        distance[0] = 0; // 0->0까지의 이동거리 : 0
+        for(int i=1;i<=D;i++){
+            if(path[i].size()>0){
+                // i지점에 도착하는 지름길이 있다면 ? 지름길 중 가장 최단거리로 갱신해주기
+                for(spot s : path[i]){
+                    if(distance[s.start] + s.dist > distance[i])
+                        continue; // 이미 갱신되었다면 ?
+                    distance[i] = Math.min(distance[i-1]+1,distance[s.start]+s.dist);
+                }
+                continue;
+            }
+            distance[i] = distance[i-1]+1;
+        }
+
+
+        System.out.println(distance[D]); // D거리까지 이동하는데 걸리는 최단거리
+
     }
 }
