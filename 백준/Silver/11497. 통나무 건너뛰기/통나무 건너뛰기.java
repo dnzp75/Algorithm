@@ -1,47 +1,48 @@
-import java.io.*;
-import java.util.ArrayList;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.StringTokenizer;
 
-public class Main{
+public class Main {
+
     public static void main(String[] args) throws IOException {
-        //입력값 처리하는 BufferedReader
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        //결과값 출력하는 BufferedWriter
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         StringTokenizer st;
+
         int T = Integer.parseInt(br.readLine());
         int[] arr;
-        //각 테스트케이스 최소 난이도 탐색!
-        for(int i=0;i<T;i++){
+
+        for(int t = 0; t < T; t++) {
             int N = Integer.parseInt(br.readLine());
-            st = new StringTokenizer(br.readLine()," ");
+            st = new StringTokenizer(br.readLine(), " ");
             arr = new int[N];
-            //통나무 정보 저장
-            for(int j=0;j<N;j++)
-                arr[j] = Integer.parseInt(st.nextToken());
-            Arrays.sort(arr);	//높이 기준 오름차순 정렬
-            int answer = -1, pre = arr[0];
-            //중간 최대값까지 올라가는 중
-            for(int j=2;j<N;j+=2){
-                answer = Math.max(answer, Math.abs(pre - arr[j]));
-                pre = arr[j];
+
+            for(int i = 0; i < N; i++)
+                arr[i] = Integer.parseInt(st.nextToken());
+
+            Arrays.sort(arr); // 높이 기준 오름차순 정렬
+            
+            int left = N - 1;
+            int right = 0;
+            int[] nums = new int[N];
+            // 왼쪽 오른쪽에 하나씩 정렬된 통나무를 놓으면 가장 작은 차이를 만들 수 있음
+            for (int i = 0; i < N; i++) {
+                if (i % 2 == 0) {
+                    nums[left--] = arr[i];
+                } else {
+                    nums[right++] = arr[i];
+                }
             }
-            //N이 짝수일 때
-            if(N%2==0)
-                N++;
-            //중간 최대값에서 내려가는 중
-            for(int j=N-2;j>0;j-=2){
-                answer = Math.max(answer, Math.abs(pre - arr[j]));
-                pre = arr[j];
+            // 인접한것들끼리의 크기비교
+            int answer = Integer.MIN_VALUE;
+            for (int i = 1; i < N; i++) {
+                answer = Math.max(answer, Math.abs(nums[i] - nums[i - 1]));
             }
-            //첫 통나무와 마지막 통나무 난이도 구하기
-            answer = Math.max(answer, Math.abs(pre - arr[0]));
-            bw.write(answer + "\n");	//최소 난이도 BufferedWriter 저장
+            // 처음과 끝 통나무도 크기비교
+            answer = Math.max(answer,Math.abs(nums[0] - nums[N - 1]));
+            System.out.println(answer + " ");
         }
-        bw.flush();		//결과 출력
-        bw.close();
-        br.close();
 
     }
 }
