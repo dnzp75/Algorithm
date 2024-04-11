@@ -1,40 +1,47 @@
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.StringTokenizer;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.*;
-
-public class Main {
-
+public class Main{
     public static void main(String[] args) throws IOException {
-
+        //입력값 처리하는 BufferedReader
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        //결과값 출력하는 BufferedWriter
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        StringTokenizer st;
         int T = Integer.parseInt(br.readLine());
-        for (int i = 0; i < T; i++) {
+        int[] arr;
+        //각 테스트케이스 최소 난이도 탐색!
+        for(int i=0;i<T;i++){
             int N = Integer.parseInt(br.readLine());
-            StringTokenizer st = new StringTokenizer(br.readLine());
-            PriorityQueue<Integer> queue = new PriorityQueue<>((o1, o2) -> o2 - o1);
-            int[] arr = new int[N];
-            for (int j = 0; j < N; j++) {
-                queue.add(Integer.valueOf(st.nextToken()));
+            st = new StringTokenizer(br.readLine()," ");
+            arr = new int[N];
+            //통나무 정보 저장
+            for(int j=0;j<N;j++)
+                arr[j] = Integer.parseInt(st.nextToken());
+            Arrays.sort(arr);	//높이 기준 오름차순 정렬
+            int answer = -1, pre = arr[0];
+            //중간 최대값까지 올라가는 중
+            for(int j=2;j<N;j+=2){
+                answer = Math.max(answer, Math.abs(pre - arr[j]));
+                pre = arr[j];
             }
-            arr[N / 2] = queue.poll();
-            int left = N / 2 - 1;
-            int right = N / 2 + 1;
-            while (!queue.isEmpty()) {
-                if (right < N) {
-                    arr[right++] = queue.poll();
-                }
-                if (!queue.isEmpty()) {
-                    arr[left--] = queue.poll();
-                }
+            //N이 짝수일 때
+            if(N%2==0)
+                N++;
+            //중간 최대값에서 내려가는 중
+            for(int j=N-2;j>0;j-=2){
+                answer = Math.max(answer, Math.abs(pre - arr[j]));
+                pre = arr[j];
             }
-            int max = Math.abs(arr[0] - arr[N - 1]);
-            for (int j = 1; j < N; j++) {
-                max = Math.max(max, Math.abs(arr[j] - arr[j - 1]));
-            }
-            System.out.println(max);
+            //첫 통나무와 마지막 통나무 난이도 구하기
+            answer = Math.max(answer, Math.abs(pre - arr[0]));
+            bw.write(answer + "\n");	//최소 난이도 BufferedWriter 저장
         }
-    }
+        bw.flush();		//결과 출력
+        bw.close();
+        br.close();
 
+    }
 }
