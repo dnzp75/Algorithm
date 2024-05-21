@@ -1,30 +1,24 @@
-import java.util.Map;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
+import java.util. *;
 
 class Solution {
     public int[] solution(String[] name, int[] yearning, String[][] photo) {
-        int[] answer = new int [photo.length];
         
-        HashMap<String, Integer> map = new LinkedHashMap<>();
+        Map<String,Integer> hashMap = new HashMap<>();
         
-        for(int i=0; i<name.length; i++){
-            map.put(name[i],yearning[i]);
+        for( int i=0; i<name.length; i++){
+            hashMap.put(name[i],yearning[i]);
         }
+        
+        int[] result = new int[photo.length];
         
         for(int i=0; i<photo.length; i++) {
-            String[] persons = photo[i];
             int score = 0;
-            
-            for(int j=0; j<persons.length; j++){
-                String person = persons[j];
-                if(map.containsKey(person)){
-                    score+=map.get(person);
-                }
+            for(String person : photo[i]){
+                score += hashMap.getOrDefault(person,0);
             }
-             answer[i]=score;
+            result[i] = score;
         }
-        
-         return answer;
+        return result;
+
     }
 }
