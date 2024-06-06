@@ -1,17 +1,27 @@
-import java.util.*; class Solution {
+import java.util.*;
+
+class Solution {
     public String[] solution(String[] players, String[] callings) {
-        Map<String, Integer> map = new HashMap<>();
-        for (int i = 0; i < players.length; i++) {
-            String player = players[i];
-            map.put(player, i);
-        }         for (String calling : callings) {
-            int grade = map.get(calling);
-            String forwardCalling = players[grade - 1];
-            players[grade - 1] = calling;
-            map.put(calling, grade - 1);
-            players[grade] = forwardCalling;
-            map.put(forwardCalling, grade);
+        
+        HashMap<String, Integer> ranking = new HashMap<>();
+        
+        for(int i=0; i<players.length; i++){
+            ranking.put(players[i],i);
         }
-        return players;
-    }
+        
+            
+        for( String player : callings ) {
+            int playerRanking = ranking.get(player);
+            
+            String frontPlayer = players[playerRanking-1];
+            
+            ranking.replace(frontPlayer, playerRanking);
+            players[playerRanking] = frontPlayer;
+            
+            ranking.replace(player, playerRanking-1);
+            players[playerRanking-1] = player;
+             }
+                return players;
+
+        }
 }
