@@ -1,18 +1,16 @@
-import java.util.*;
-import java.lang.*;
-
 class Solution {
     public int solution(int n, int m, int[] section) {
         int answer = 1;
+        
         int start = section[0];
-        int end = section[0] +(m-1);
+        int end = section[0] + (m-1);
         
         for( int i : section){
-            if( i>=start && i<= end )
+            if( i >=start && i<=end) {
                 continue;
-            else{
+            } else {
                 start = i;
-                end = i +(m-1);
+                end = i + (m-1);
                 answer++;
             }
         }
