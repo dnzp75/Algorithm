@@ -2,7 +2,7 @@ import java.util.*;
 
 class Solution {
     public int[] solution(int[] numbers) {
-        int[] answer = {};
+        int[] answer = new int[numbers.length];
         
         List<Integer> list = new ArrayList<>();
         
@@ -13,7 +13,6 @@ class Solution {
                 }
             }
         }
-        
         return list.stream().sorted().mapToInt(i->i).toArray();
     }
 }
