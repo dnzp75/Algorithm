@@ -53,6 +53,7 @@ class Solution {
 
         Queue<Moving> qu = new LinkedList<>();
         qu.add(robot);
+        
         boolean[][]  visited = new boolean[n][m];
         visited[robot.x][robot.y] = true;
 
@@ -62,6 +63,7 @@ class Solution {
             if(cn.x == goal.x && cn.y == goal.y){
                 return cn.depth;
             }
+            
 
             for(int i=0; i<4; i++){
                 int nx = cn.x;
