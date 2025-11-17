@@ -1,55 +1,58 @@
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.BufferedWriter;
-import java.io.OutputStreamWriter;
-import java.io.IOException;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.io.*;
+import java.util.*;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
+    //그래프 방향 간선 저장 리스트
+    static ArrayList<ArrayList<Integer>> graph = new ArrayList<>();
+    public static void main(String[] args) throws IOException{
+        //입력값 처리하는 BufferedReader
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        //결과값 출력하는 BufferedWriter
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-        
-        int N = Integer.parseInt(br.readLine()); // 정점의 수 N
-        int[][] graph = new int[N][N]; // 인접 행렬
-        int[][] result = new int[N][N]; // 결과 행렬
-
-        // 인접 행렬 입력 받기
-        for (int i = 0; i < N; i++) {
-            String[] line = br.readLine().split(" ");
-            for (int j = 0; j < N; j++) {
-                graph[i][j] = Integer.parseInt(line[j]);
+        int N = Integer.parseInt(br.readLine());
+        StringTokenizer st;
+        for(int i=0;i<N;i++)
+            graph.add(new ArrayList<>());
+        int[][] answer = new int[N][N];
+        //그래프 방향 간선 저장
+        for(int i=0;i<N;i++) {
+            st = new StringTokenizer(br.readLine()," ");
+            for(int j=0;j<N;j++) {
+                int n = Integer.parseInt(st.nextToken());
+                if(n == 1)
+                    graph.get(i).add(j);
             }
         }
+        //각 정점에서 BFS 탐색 진행
+        for(int i=0;i<N;i++)
+            bfs(i, answer, N);
 
-        // BFS로 각 노드에서 도달 가능한 노드 찾기
-        for (int start = 0; start < N; start++) {
-            boolean[] visited = new boolean[N];
-            Queue<Integer> queue = new LinkedList<>();
-            queue.add(start);
-            
-            while (!queue.isEmpty()) {
-                int current = queue.poll();
-                for (int next = 0; next < N; next++) {
-                    if (graph[current][next] == 1 && !visited[next]) {
-                        visited[next] = true;
-                        result[start][next] = 1; // start에서 next로 갈 수 있는 경로가 있음
-                        queue.add(next);
-                    }
+        //각 정점 방문 확인 배열의 형태 BufferdWriter 저장
+        for(int i=0;i<N;i++) {
+            for(int j=0;j<N;j++)
+                bw.write(answer[i][j] + " " );
+            bw.newLine();
+        }
+        bw.flush();		//결과 출력
+        bw.close();
+        br.close();
+    }
+    //BFS 탐색 진행하여 방문 확인하는 함수
+    public static void bfs(int start, int[][] answer, int N) {
+        Queue<Integer> q = new LinkedList<>();
+        boolean[] visited = new boolean[N];	//방문 확인 배열
+        q.add(start);		//기준 정점 Queue 저장
+        //탐색 진행
+        while(!q.isEmpty()) {
+            int cur = q.poll();
+            //간선 탐색!
+            for(int next : graph.get(cur)) {
+                if(!visited[next]) {
+                    visited[next]= true;
+                    answer[start][next] = 1;
+                    q.add(next);
                 }
             }
         }
-
-        // 결과 출력
-        for (int i = 0; i < N; i++) {
-            for (int j = 0; j < N; j++) {
-                bw.write(result[i][j] + " ");
-            }
-            bw.newLine();
-        }
-        bw.flush();
-        bw.close();
-        br.close();
     }
 }
