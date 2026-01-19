@@ -1,16 +1,23 @@
+import java.util.*;
+
 class Solution {
-    public String solution(String s) {        
-        String[] st = s.trim().split("\\s+"); // 공백 기준으로 나누기;
-        
+    public String solution(String s) {
+        String[] a = s.split(" ");
+                
         int min = Integer.MAX_VALUE;
         int max = Integer.MIN_VALUE;
         
-        for(String stt : st){
-            int value = Integer.parseInt(stt);
-            if (value < min) min = value;
-            if (value > max) max = value;            
+        for( String a2 : a){
+            int a3 = Integer.parseInt(a2);
+            if( min > a3) {
+                min = a3;
+            }
+            if( max < a3){
+                max = a3;
+            }
         }
         
         return min + " " + max;
+    
     }
 }
