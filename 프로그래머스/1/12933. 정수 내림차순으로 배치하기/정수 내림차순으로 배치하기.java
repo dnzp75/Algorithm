@@ -4,16 +4,18 @@ class Solution {
     public long solution(long n) {
         long answer = 0;
         
-        String[] s = String.valueOf(n).split("");
-        Arrays.sort(s);
+        String a = Long.toString(n);
+        String[] arr = a.split("");
         
-        String str = "";
-        for(int i= s.length-1; i>=0; i--){
-            str+=s[i];
+        Arrays.sort(arr, Collections.reverseOrder());
+        
+        StringBuilder sb = new StringBuilder();
+        
+        for(String s : arr){
+            sb.append(s);
         }
         
-        answer = Long.parseLong(str);
         
-        return answer;
+        return Long.parseLong(sb.toString());
     }
 }
