@@ -2,22 +2,22 @@ import java.util.*;
 
 class Solution {
     public String solution(String s) {
-        String[] a = s.split(" ");
-                
-        int min = Integer.MAX_VALUE;
-        int max = Integer.MIN_VALUE;
+        String answer = "";
         
-        for( String a2 : a){
-            int a3 = Integer.parseInt(a2);
-            if( min > a3) {
-                min = a3;
-            }
-            if( max < a3){
-                max = a3;
-            }
+        String[] a = s.split(" ");
+
+        int[] c = new int[a.length];
+
+        
+        for( int i=0; i<a.length; i++){
+            c[i] = Integer.parseInt(a[i]);
         }
         
-        return min + " " + max;
-    
+        Arrays.sort(c);        
+        
+                
+        answer = c[0] + " " + c[c.length-1];
+        
+        return answer;
     }
 }
