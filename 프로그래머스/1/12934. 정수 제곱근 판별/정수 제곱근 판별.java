@@ -2,17 +2,14 @@ import java.util.*;
 
 class Solution {
     public long solution(long n) {
-        long answer = 0;
         
-        double sqrt = Math.sqrt(n);
-            
-        if(sqrt%1 == 0){
-            answer = (long)Math.pow(sqrt+1,2);
-        }
-        else {
-            answer = -1;
+        
+        long root = (long)Math.sqrt(n);
+        
+        if(root * root == n){
+            return (root+1) *(root+1);
         }
         
-        return answer;
+        return -1;
     }
 }
