@@ -1,12 +1,29 @@
-import java.util.Arrays;
-import java.util.stream.Stream;
-import java.util.List;
-import java.util.ArrayList;
-
 class Solution {
-  public int[] solution(int[] arr) {
-      if (arr.length <= 1) return new int[]{ -1 };
-      int min = Arrays.stream(arr).min().getAsInt();
-      return Arrays.stream(arr).filter(i -> i != min).toArray();
-  }
+    public int[] solution(int[] arr) {
+        if(arr.length == 1){
+            return new int[] { -1};
+        }
+        
+        int min = arr[0];
+        
+        for(int num : arr ){
+            if(num < min){
+                min = num;
+            }
+        }
+        
+        
+        int[] answer = new int[arr.length - 1];
+        int idx = 0;
+        
+        for( int num : arr ){
+            if(min != num ){
+                answer[idx] = num;
+                idx++;
+            }
+        }
+        
+        
+        return answer;
+    }
 }
