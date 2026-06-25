@@ -1,28 +1,23 @@
 class Solution {
     boolean solution(String s) {
-        boolean answer = true;
+        boolean answer = false;
 
-        
-        String[] arr = s.split("");
-        
         int cnt =0;
-        for(int i=0; i<arr.length; i++){
-            if(arr[i].equals("(")){
+        
+        for(int i=0; i<s.length(); i++){
+            if(s.charAt(i) == '('){
                 cnt++;
             } else {
-                cnt--;
+                cnt --;
             }
             
-            if(cnt<0) {
-                answer = false;
-                return answer;
+            if(cnt < 0){
+                break;
             }
         }
         
-        if( cnt == 0){
-            answer = true;
-        } else {
-            answer = false;
+        if(cnt ==0 ){
+            answer =true;
         }
 
         return answer;
