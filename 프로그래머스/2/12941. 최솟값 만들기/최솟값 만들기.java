@@ -9,10 +9,17 @@ class Solution
         Arrays.sort(A);
         Arrays.sort(B);
         
-        for(int i=0; i<A.length; i++){
-            answer+= A[i]* B[B.length-i-1];
-        }
+        int[] C = new int[B.length];
         
+        for(int i=0; i<B.length; i++){
+            C[i] = B[(B.length-1) - i];
+        }
+        // System.out.println(Arrays.toString(C));
+        
+        for(int i=0; i<A.length; i++){
+            answer += A[i] * C[i];
+        }
+
         return answer;
     }
 }
